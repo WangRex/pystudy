@@ -7,6 +7,7 @@ import locale
 import datetime
 import sys
 import shutil
+import uuid
 
 
 def mk_dirs(path):
@@ -50,6 +51,12 @@ def get_file_create_time_ym(filepath):
     return timestamp_to_time_ym(t)
 
 
+def get_obj_id():
+    uid = str(uuid.uuid4())
+    result = ''.join(uid.split('-'))
+    return result[0:11]
+
+
 def rename_all():
     filepath = r"C:\Users\Rex\Videos\王乙诺" #需要整理的文件目录
     file_list = os.listdir(filepath)  # 待修改文件夹
@@ -69,7 +76,7 @@ def rename_all():
         print("basename : " + basename)
         dirname = os.path.dirname(str(filepath + "\\" + fileName))
         print("dirname : " + dirname)
-        new_name = (get_file_create_time(str(filepath + "\\" + fileName)) + '.' + pattern[0])
+        new_name = (get_file_create_time(str(filepath + "\\" + fileName))) + "_" + get_obj_id() + '.' + pattern[0]
         os.rename(fileName, new_name)
         shutil.move(str(filepath + "\\" + new_name), str(filepath + "\\" + ym))
         # print("文件路径："+ filepath + "\\" + fileName)
